@@ -12,6 +12,10 @@ G.add_nodes_from(ports + ships)
 # Додавання ребер
 G.add_edges_from([("Шанхай", "VLOC"), ("Сінгапур", "VLOC"), ("Сінгапур", "Балкер"), ("Ціндао", "Балкер"), ("Ціндао", "Pioneering_Spirit")])
 
+# Додавання додаткових ребер або вершин
+additional_edges = [("Шанхай", "Сінгапур"), ("Сінгапур", "Ціндао")]
+G.add_edges_from(additional_edges)
+
 # Визначення позицій для кращої візуалізації
 pos = nx.spring_layout(G)
 
