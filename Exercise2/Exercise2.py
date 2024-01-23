@@ -20,15 +20,37 @@ nx.draw(G, pos, with_labels=True, font_weight="bold", node_size=700, node_color=
 plt.title("Мережа морських сполучень")
 plt.show()
 
-# DFS
-dfs_paths = list(nx.dfs_paths(G, source="Шанхай", depth_limit=len(G)))
-print("DFS Paths:")
-for path in dfs_paths:
-    print(path)
 
-# BFS
-bfs_paths = list(nx.bfs_edges(G, source="Шанхай"))
-bfs_paths = [path + (target,) for path, target in bfs_paths]
-print("\nBFS Paths:")
-for path in bfs_paths:
-    print(path)
+def dfs(graph, start, visited=None, path=None):
+    if visited is None:
+        visited = set()
+    if path is None:
+        path = []
+    visited.add(start)
+    path.append(start)
+    for neighbor in graph.neighbors(start):
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited, path)
+    return path
+
+def bfs(graph, start):
+    visited = set()
+    queue = [start]
+    visited.add(start)
+    path = []
+    while queue:
+        current = queue.pop(0)
+        path.append(current)
+        for neighbor in graph.neighbors(current):
+            if neighbor not in visited:
+                queue.append(neighbor)
+                visited.add(neighbor)
+    return path
+
+# Виклик алгоритмів для графа G
+dfs_path = dfs(G, "Шанхай")
+bfs_path = bfs(G, "Шанхай")
+
+# Порівняння результатів
+print(f"DFS Path: {dfs_path}")
+print(f"BFS Path: {bfs_path}")
